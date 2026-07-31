@@ -1,0 +1,48 @@
+.benefits {
+  background:
+    linear-gradient(180deg, transparent, rgba(235, 228, 218, 0.55) 30%, transparent);
+}
+
+.benefits__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.benefits__item {
+  padding: 1.6rem 1.4rem 1.5rem;
+  border-top: 1px solid var(--line);
+  background: transparent;
+}
+
+.benefits__index {
+  display: block;
+  margin-bottom: 1.4rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.benefits__item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.65rem;
+}
+
+.benefits__item p {
+  color: var(--ink-muted);
+  font-size: 0.98rem;
+}
+
+@media (max-width: 900px) {
+  .benefits__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .benefits__grid {
+    grid-template-columns: 1fr;
+  }
+}
