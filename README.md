@@ -84,14 +84,28 @@ npm run build
 
 ### GitHub Pages
 
-Сайт рассчитан на адрес:
-`https://asyamendesz-jpg.github.io/shoe-store-s-business-card-website/`
+Сайт: `https://asyamendesz-jpg.github.io/shoe-store-s-business-card-website/`
 
-1. Выполните `npm run build` (в `dist` появятся `index.html` и `404.html`).
-2. Залейте содержимое `dist` в ветку `gh-pages` (или в папку docs / Actions — как настроено в репозитории).
-3. В настройках Pages укажите эту ветку/папку.
+**Важно:** на хостинг нужно заливать собранный сайт с папкой `assets/`. Если залить только `index.html`, а JS/CSS положить в корень репозитория — страница останется на «Загрузка сайта…».
 
-Важно: не открывайте `index.html` как файл и не деплойте исходники `src/` — на хостинг нужно именно содержимое `dist` после сборки.
+#### Вариант A — папка `docs` (уже собрана в проекте)
+
+1. Запушьте репозиторий на GitHub (включая папку `docs/`).
+2. GitHub → **Settings → Pages**.
+3. Source: **Deploy from a branch**.
+4. Branch: `main`, folder: **/docs** → Save.
+5. Подождите 1–2 минуты и обновите сайт.
+
+Пересборка `docs` локально:
+
+```bash
+npm run build:docs
+```
+
+#### Вариант B — GitHub Actions
+
+После пуша в `main` workflow `.github/workflows/deploy.yml` соберёт сайт сам.  
+В **Settings → Pages** выберите Source: **GitHub Actions**.
 ## Лицензия
 
 [MIT](LICENSE)
