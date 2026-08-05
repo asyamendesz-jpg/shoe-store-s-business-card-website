@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/shoe-store-s-business-card-website/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      id="meta-description"
+      name="description"
+      content="FORMA — умная покупка обуви. Современные модели, комфорт и честная цена без переплаты за бренд."
+      data-ru="FORMA — умная покупка обуви. Современные модели, комфорт и честная цена без переплаты за бренд."
+      data-en="FORMA — smart shoe shopping. Modern styles, everyday comfort, and fair prices without brand markup."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title data-ru="FORMA — Обувь на каждый день без переплаты" data-en="FORMA — Everyday shoes without overpaying">
+      FORMA — Обувь на каждый день без переплаты
+    </title>
+    <script>
+      (function () {
+        var STORAGE_KEY = 'forma_lang'
+        var titleEl = document.querySelector('title')
+        var descEl = document.getElementById('meta-description')
+
+        function applyLang(lang) {
+          if (lang !== 'ru' && lang !== 'en') lang = 'ru'
+          document.documentElement.lang = lang
+          localStorage.setItem(STORAGE_KEY, lang)
+
+          if (titleEl) {
+            titleEl.textContent = titleEl.getAttribute('data-' + lang) || titleEl.textContent
+          }
+          if (descEl) {
+            descEl.setAttribute(
+              'content',
+              descEl.getAttribute('data-' + lang) || descEl.getAttribute('content'),
+            )
+          }
+
+          window.dispatchEvent(new CustomEvent('forma:lang', { detail: { lang: lang } }))
+        }
+
+        var saved = localStorage.getItem(STORAGE_KEY)
+        if (!saved) {
+          saved = (navigator.language || '').toLowerCase().startsWith('en') ? 'en' : 'ru'
+        }
+        applyLang(saved)
+
+        window.FORMA_LANG = {
+          get: function () {
+            return localStorage.getItem(STORAGE_KEY) || 'ru'
+          },
+          set: applyLang,
+        }
+      })()
+    </script>
+    <script type="module" crossorigin src="/shoe-store-s-business-card-website/assets/index-Bqc6MjLZ.js"></script>
+    <link rel="stylesheet" crossorigin href="/shoe-store-s-business-card-website/assets/index-DpeYddbR.css">
+  </head>
+  <body>
+    <div id="root">
+      <div style="max-width: 480px; margin: 20vh auto; padding: 1.5rem; font-family: Outfit, sans-serif; color: #2f2e2c; text-align: center; line-height: 1.5">
+        <p style="font-family: Syne, sans-serif; font-weight: 800; letter-spacing: 0.08em; margin: 0 0 1rem">FORMA</p>
+        <p style="margin: 0; color: #6b6862">Загрузка сайта…</p>
+      </div>
+    </div>
+  </body>
+</html>
