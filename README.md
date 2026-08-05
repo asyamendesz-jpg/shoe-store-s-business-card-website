@@ -80,8 +80,18 @@ src/
 npm run build
 ```
 
-Содержимое папки `dist` загрузите на хостинг. Так как используется React Router, настройте на хостинге fallback всех маршрутов на `index.html` (SPA-режим).
+Содержимое папки `dist` загрузите на хостинг.
 
+### GitHub Pages
+
+Сайт рассчитан на адрес:
+`https://asyamendesz-jpg.github.io/shoe-store-s-business-card-website/`
+
+1. Выполните `npm run build` (в `dist` появятся `index.html` и `404.html`).
+2. Залейте содержимое `dist` в ветку `gh-pages` (или в папку docs / Actions — как настроено в репозитории).
+3. В настройках Pages укажите эту ветку/папку.
+
+Важно: не открывайте `index.html` как файл и не деплойте исходники `src/` — на хостинг нужно именно содержимое `dist` после сборки.
 ## Лицензия
 
 [MIT](LICENSE)

@@ -1,9 +1,11 @@
 import { images } from '../data'
 import { useInView } from '../hooks/useInView'
+import { useLanguage } from '../context/LanguageContext'
 import './FinalCTA.css'
 
 export function FinalCTA() {
   const [ref, visible] = useInView<HTMLElement>()
+  const { t } = useLanguage()
 
   return (
     <section className="final-cta" ref={ref}>
@@ -12,10 +14,10 @@ export function FinalCTA() {
         <div className="final-cta__scrim" />
       </div>
       <div className={`container final-cta__content reveal ${visible ? 'is-visible' : ''}`}>
-        <h2>Найдите свою удобную пару сегодня</h2>
-        <p>Современный дизайн, комфорт и честная цена — без переплаты за бренд.</p>
+        <h2>{t('ctaTitle')}</h2>
+        <p>{t('ctaText')}</p>
         <a className="btn btn--light" href="#products">
-          Посмотреть каталог
+          {t('ctaButton')}
         </a>
       </div>
     </section>
