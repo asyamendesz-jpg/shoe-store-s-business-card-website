@@ -6,13 +6,13 @@ export const images = {
   men:
     'https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=900&q=80',
   kids:
-    'https://images.unsplash.com/photo-1514989940723-e8e51635b132?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=900&q=80',
   sneakers:
     'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=900&q=80',
   boots:
     'https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=900&q=80',
   casual:
-    'https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=900&q=80',
   trend1:
     'https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80',
   trend2:
@@ -22,7 +22,7 @@ export const images = {
   sustainable:
     'https://images.unsplash.com/photo-1449505278894-297fdb3edbc1?auto=format&fit=crop&w=1400&q=80',
   cta:
-    'https://images.unsplash.com/photo-1528701800489-20be3c2ea5d3?auto=format&fit=crop&w=1600&q=80',
+    'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=1600&q=80',
   review1:
     'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
   review2:

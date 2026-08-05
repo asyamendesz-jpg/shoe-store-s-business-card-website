@@ -89,7 +89,25 @@ export function getProducts(): Product[] {
     write(PRODUCTS_KEY, defaultProducts)
     return defaultProducts
   }
-  return products
+
+  const brokenFragments = [
+    'photo-1514989940723-e8e51635b132',
+    'photo-1528701800489-20be3c2ea5d3',
+  ]
+  const defaultsById = new Map(defaultProducts.map((p) => [p.id, p]))
+  let changed = false
+  const synced = products.map((product) => {
+    const fallback = defaultsById.get(product.id)
+    if (!fallback) return product
+    if (brokenFragments.some((part) => product.image.includes(part))) {
+      changed = true
+      return { ...product, image: fallback.image }
+    }
+    return product
+  })
+
+  if (changed) write(PRODUCTS_KEY, synced)
+  return synced
 }
 
 export function saveProducts(products: Product[]) {
