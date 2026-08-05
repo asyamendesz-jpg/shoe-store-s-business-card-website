@@ -1,8 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig({
+// GitHub Pages: https://<user>.github.io/shoe-store-s-business-card-website/
+const githubPagesBase = '/shoe-store-s-business-card-website/'
+
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  // Относительные пути — надёжно работают на GitHub Pages в подпапке репозитория
-  base: './',
-})
+  // В dev — "/", в production-сборке — путь репозитория на GitHub Pages
+  base: command === 'build' ? githubPagesBase : '/',
+}))

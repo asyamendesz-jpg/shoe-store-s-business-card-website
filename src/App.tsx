@@ -11,19 +11,8 @@ import { PrivacyPage } from './pages/PrivacyPage'
 import { OfferPage } from './pages/OfferPage'
 import { AdminPage } from './pages/AdminPage'
 
-function getRouterBasename(): string | undefined {
-  if (import.meta.env.DEV) return undefined
-
-  const base = '/shoe-store-s-business-card-website'
-  const path = window.location.pathname
-
-  // Пока Pages смотрит в корень репозитория — готовый сайт лежит в /docs/
-  if (path === `${base}/docs` || path.startsWith(`${base}/docs/`)) {
-    return `${base}/docs`
-  }
-
-  return base
-}
+/** Basename из vite.config.ts → base (без завершающего слэша) */
+const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '') || undefined
 
 function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -39,7 +28,7 @@ function App() {
   return (
     <LanguageProvider>
       <StoreProvider>
-        <BrowserRouter basename={getRouterBasename()}>
+        <BrowserRouter basename={routerBasename}>
           <ScrollManager />
           <Routes>
             <Route path="/" element={<HomePage />} />

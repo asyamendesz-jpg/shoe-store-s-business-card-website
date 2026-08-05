@@ -72,40 +72,30 @@ src/
 
 Товары, корзина и заявки хранятся в `localStorage` браузера — это решение для сайта-визитки без сервера. Заявки видны в админке только в том браузере, где были оформлены. Для реальных онлайн-заказов с разных устройств потребуется подключить backend (или сервис вроде Telegram-бота / Google Sheets для приёма заявок).
 
-## Деплой
+## Деплой на GitHub Pages
 
-Проект собирается в статические файлы и разворачивается на любом статическом хостинге (Netlify, Vercel, GitHub Pages, обычный хостинг):
+Репозиторий: `shoe-store-s-business-card-website`  
+Адрес сайта: `https://<username>.github.io/shoe-store-s-business-card-website/`
+
+В `vite.config.ts` задан `base: '/shoe-store-s-business-card-website/'` для production-сборки.  
+Публикация идёт через GitHub Actions (`.github/workflows/deploy.yml`).
+
+### Как включить
+
+1. Запушьте изменения в ветку `main`.
+2. GitHub → **Settings → Pages**.
+3. Source: **GitHub Actions**.
+4. Дождитесь успешного workflow **Deploy to GitHub Pages** (вкладка Actions).
+
+Локальная проверка сборки:
 
 ```bash
 npm run build
+npm run preview
 ```
 
-Содержимое папки `dist` загрузите на хостинг.
+В `dist` также создаётся `404.html` (копия `index.html`) для корректной работы React Router на GitHub Pages.
 
-### GitHub Pages
-
-Сайт: `https://asyamendesz-jpg.github.io/shoe-store-s-business-card-website/`
-
-**Важно:** на хостинг нужно заливать собранный сайт с папкой `assets/`. Если залить только `index.html`, а JS/CSS положить в корень репозитория — страница останется на «Загрузка сайта…».
-
-#### Вариант A — папка `docs` (уже собрана в проекте)
-
-1. Запушьте репозиторий на GitHub (включая папку `docs/`).
-2. GitHub → **Settings → Pages**.
-3. Source: **Deploy from a branch**.
-4. Branch: `main`, folder: **/docs** → Save.
-5. Подождите 1–2 минуты и обновите сайт.
-
-Пересборка `docs` локально:
-
-```bash
-npm run build:docs
-```
-
-#### Вариант B — GitHub Actions
-
-После пуша в `main` workflow `.github/workflows/deploy.yml` соберёт сайт сам.  
-В **Settings → Pages** выберите Source: **GitHub Actions**.
 ## Лицензия
 
 [MIT](LICENSE)
