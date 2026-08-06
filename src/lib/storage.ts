@@ -2,6 +2,8 @@ import type { Order, Product } from '../types'
 import { images } from '../data'
 
 const PRODUCTS_KEY = 'forma_products'
+const PRODUCTS_VERSION_KEY = 'forma_products_version'
+const PRODUCTS_VERSION = 4
 const ORDERS_KEY = 'forma_orders'
 const CART_KEY = 'forma_cart'
 const ADMIN_KEY = 'forma_admin'
@@ -42,7 +44,7 @@ export const defaultProducts: Product[] = [
     name: 'Кеды Classic Walk',
     price: 2190,
     category: 'Мужская',
-    image: images.men,
+    image: images.menSneakers,
     description: 'Мужские кеды для прогулок и повседневных образов.',
     sizes: [40, 41, 42, 43, 44, 45],
     inStock: true,
@@ -84,30 +86,21 @@ function write<T>(key: string, value: T) {
 }
 
 export function getProducts(): Product[] {
-  const products = read<Product[]>(PRODUCTS_KEY, [])
-  if (products.length === 0) {
+  const storedVersion = read<number>(PRODUCTS_VERSION_KEY, 0)
+  if (storedVersion < PRODUCTS_VERSION) {
     write(PRODUCTS_KEY, defaultProducts)
+    write(PRODUCTS_VERSION_KEY, PRODUCTS_VERSION)
     return defaultProducts
   }
 
-  const brokenFragments = [
-    'photo-1514989940723-e8e51635b132',
-    'photo-1528701800489-20be3c2ea5d3',
-  ]
-  const defaultsById = new Map(defaultProducts.map((p) => [p.id, p]))
-  let changed = false
-  const synced = products.map((product) => {
-    const fallback = defaultsById.get(product.id)
-    if (!fallback) return product
-    if (brokenFragments.some((part) => product.image.includes(part))) {
-      changed = true
-      return { ...product, image: fallback.image }
-    }
-    return product
-  })
+  const products = read<Product[]>(PRODUCTS_KEY, [])
+  if (products.length === 0) {
+    write(PRODUCTS_KEY, defaultProducts)
+    write(PRODUCTS_VERSION_KEY, PRODUCTS_VERSION)
+    return defaultProducts
+  }
 
-  if (changed) write(PRODUCTS_KEY, synced)
-  return synced
+  return products
 }
 
 export function saveProducts(products: Product[]) {
