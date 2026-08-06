@@ -59,5 +59,6 @@ export const STORE = {
   phoneDisplay: '8-928-775-36-93',
   phoneHref: 'tel:+79287753693',
   hours: 'Ежедневно 10:00–21:00',
+  adminLogin: 'admin',
   adminPassword: 'forma2024',
 } as const

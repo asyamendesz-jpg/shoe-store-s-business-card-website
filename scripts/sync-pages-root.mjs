@@ -19,6 +19,15 @@ cpSync(resolve(dist, 'assets'), assetsOut, { recursive: true })
 copyFileSync(resolve(dist, 'index.html'), resolve(root, 'index.html'))
 copyFileSync(resolve(dist, '404.html'), resolve(root, '404.html'))
 
+const spaRoutes = ['admin', 'cart', 'privacy', 'offer']
+for (const route of spaRoutes) {
+  const src = resolve(dist, route, 'index.html')
+  if (!existsSync(src)) continue
+  const destDir = resolve(root, route)
+  mkdirSync(destDir, { recursive: true })
+  copyFileSync(src, resolve(destDir, 'index.html'))
+}
+
 const faviconSrc = resolve(dist, 'favicon.svg')
 if (existsSync(faviconSrc)) {
   copyFileSync(faviconSrc, resolve(root, 'favicon.svg'))

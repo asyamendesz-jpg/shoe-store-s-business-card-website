@@ -151,6 +151,8 @@ export const translations = {
     footerPrivacy: 'Политика конфиденциальности',
     footerOffer: 'Публичная оферта',
     footerAdmin: 'Вход для сотрудников',
+    footerAdminLead: 'Логин и пароль для редактирования наличия товаров',
+    footerAdminCta: 'Открыть вход',
     address: 'г. Новочеркасск, ул. Думенко 4',
     hours: 'Ежедневно 10:00–21:00',
 
@@ -190,10 +192,11 @@ export const translations = {
 
     adminTitle: 'Админка',
     adminLoginTitle: 'Админка FORMA',
-    adminLoginLead: 'Вход для сотрудников магазина',
+    adminLoginLead: 'Вход для сотрудников: редактирование наличия и заказов',
+    adminUsername: 'Логин',
     adminPassword: 'Пароль',
     adminLogin: 'Войти',
-    adminWrongPassword: 'Неверный пароль',
+    adminWrongPassword: 'Неверный логин или пароль',
     adminToSite: 'На сайт',
     adminLogout: 'Выйти',
     adminOrders: 'Заявки',
@@ -222,6 +225,8 @@ export const translations = {
     adminDeleteConfirm: 'Удалить «{name}»?',
     adminInStockLabel: 'в наличии',
     adminOutStockLabel: 'нет',
+    adminSetOut: 'Нет в наличии',
+    adminSetIn: 'В наличии',
   },
   en: {
     navCatalog: 'Catalog',
@@ -371,6 +376,8 @@ export const translations = {
     footerPrivacy: 'Privacy policy',
     footerOffer: 'Public offer',
     footerAdmin: 'Staff login',
+    footerAdminLead: 'Login and password to edit product availability',
+    footerAdminCta: 'Open login',
     address: 'Novocherkassk, 4 Dumenko St.',
     hours: 'Daily 10:00–21:00',
 
@@ -410,10 +417,11 @@ export const translations = {
 
     adminTitle: 'Admin',
     adminLoginTitle: 'FORMA Admin',
-    adminLoginLead: 'Staff login',
+    adminLoginLead: 'Staff login: edit stock and orders',
+    adminUsername: 'Login',
     adminPassword: 'Password',
     adminLogin: 'Sign in',
-    adminWrongPassword: 'Wrong password',
+    adminWrongPassword: 'Wrong login or password',
     adminToSite: 'To website',
     adminLogout: 'Log out',
     adminOrders: 'Orders',
@@ -442,6 +450,8 @@ export const translations = {
     adminDeleteConfirm: 'Delete “{name}”?',
     adminInStockLabel: 'in stock',
     adminOutStockLabel: 'out',
+    adminSetOut: 'Mark out of stock',
+    adminSetIn: 'Mark in stock',
   },
 } as const
 

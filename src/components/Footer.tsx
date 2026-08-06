@@ -43,9 +43,6 @@ export function Footer() {
             <li>
               <Link to="/offer">{t('footerOffer')}</Link>
             </li>
-            <li>
-              <Link to="/admin">{t('footerAdmin')}</Link>
-            </li>
           </ul>
         </div>
 
@@ -58,6 +55,18 @@ export function Footer() {
             </li>
             <li>{t('hours')}</li>
           </ul>
+        </div>
+      </div>
+
+      <div className="container footer__staff">
+        <div className="footer__staff-plaque">
+          <div>
+            <p className="footer__staff-title">{t('footerAdmin')}</p>
+            <p className="footer__staff-lead">{t('footerAdminLead')}</p>
+          </div>
+          <Link className="footer__staff-btn" to="/admin">
+            {t('footerAdminCta')}
+          </Link>
         </div>
       </div>
 
