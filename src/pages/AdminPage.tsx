@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import { useLanguage } from '../context/LanguageContext'
 import { createId, formatPrice, isAdminAuthenticated, setAdminAuthenticated, normalizeProduct } from '../lib/storage'
+import {
+  ADMIN_CREDENTIALS,
+  isValidAdminLogin,
+  isValidAdminPassword,
+} from '../lib/adminAuth'
 import { interpolate } from '../i18n/translations'
 import { PRODUCT_CATEGORIES, STORE, type OrderStatus, type Product, type ProductCategory } from '../types'
 import './AdminPage.css'
@@ -33,7 +38,7 @@ export function AdminPage() {
   const { t } = useLanguage()
   const { products, orders, upsertProduct, deleteProduct, updateOrderStatus } = useStore()
   const [authed, setAuthed] = useState(() => isAdminAuthenticated())
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState(ADMIN_CREDENTIALS.login)
   const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
   const [tab, setTab] = useState<'orders' | 'products'>('products')
@@ -54,16 +59,19 @@ export function AdminPage() {
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault()
-    const loginOk = username.trim().toLowerCase() === STORE.adminLogin.toLowerCase()
-    const passOk = password === STORE.adminPassword
+    const loginOk = isValidAdminLogin(username)
+    const passOk = isValidAdminPassword(password)
     if (loginOk && passOk) {
       setAdminAuthenticated(true)
       setAuthed(true)
       setLoginError('')
-      setUsername('')
       setPassword('')
+    } else if (!loginOk && !passOk) {
+      setLoginError('Неверный логин или пароль')
+    } else if (!loginOk) {
+      setLoginError('Неверный логин. Используйте admin@aduard.com')
     } else {
-      setLoginError(t('adminWrongPassword'))
+      setLoginError('Неверный пароль')
     }
   }
 
@@ -123,7 +131,7 @@ export function AdminPage() {
           <div className="admin-login__plaque">
             <h1>{t('adminLoginTitle')}</h1>
             <p>{t('adminLoginLead')}</p>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin} autoComplete="on">
               <label>
                 {t('adminUsername')}
                 <input
@@ -132,6 +140,8 @@ export function AdminPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   autoComplete="username"
+                  inputMode="email"
+                  placeholder="admin@aduard.com"
                   required
                 />
               </label>
@@ -143,6 +153,7 @@ export function AdminPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
+                  placeholder="Пароль"
                   required
                 />
               </label>

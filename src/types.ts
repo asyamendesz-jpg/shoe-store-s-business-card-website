@@ -84,6 +84,4 @@ export const STORE = {
   name: 'FORMA',
   address: 'г. Новочеркасск, ул. Думенко 4',
   hours: 'Ежедневно 10:00–21:00',
-  adminLogin: 'admin@aduard.com',
-  adminPassword: 'forma2024',
 } as const
