@@ -1,7 +1,7 @@
-import { type FormEvent, useEffect, useMemo, useState } from 'react'
+import { type FormEvent, type ReactNode, useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useStore } from '../../context/StoreContext'
-import { matchProductsForFit } from '../../lib/fitMatch'
+import { matchProductsForFit, type MatchedProduct } from '../../lib/fitMatch'
 import {
   computeRecommendation,
   FIT_BOT_OPEN_EVENT,
@@ -12,7 +12,6 @@ import {
 } from '../../lib/fitSession'
 import {
   formatCm,
-  formatSizeLabel,
   parseFootCm,
   validateFootLength,
   validateFootWidth,
@@ -25,6 +24,9 @@ import {
   type Product,
 } from '../../types'
 import './FitBot.css'
+
+const BOT_NAME = 'Мистер Ботиночкин'
+const BOT_AVATAR = `${import.meta.env.BASE_URL}images/botinochkin.png`
 
 function StepDots({ step }: { step: FitBotStep }) {
   const order: FitBotStep[] = ['length', 'width', 'category', 'results']
@@ -39,19 +41,30 @@ function StepDots({ step }: { step: FitBotStep }) {
   )
 }
 
+function BotSpeech({ children }: { children: ReactNode }) {
+  return (
+    <div className="fitbot__speech">
+      <img className="fitbot__avatar" src={BOT_AVATAR} alt="" width={56} height={56} />
+      <div className="fitbot__bubble">
+        <p className="fitbot__who">{BOT_NAME}</p>
+        <div className="fitbot__say">{children}</div>
+      </div>
+    </div>
+  )
+}
+
 function ProductFitCard({
-  product,
-  recommendedSize,
-  recommendedLabel,
+  item,
   onBuy,
   onDetails,
 }: {
-  product: Product
-  recommendedSize: number
-  recommendedLabel: string
-  onBuy: (product: Product) => void
+  item: MatchedProduct
+  onBuy: (product: Product, size: number) => void
   onDetails: () => void
 }) {
+  const { product, matchedSize } = item
+  const sizeLabel = String(matchedSize).replace('.', ',')
+
   return (
     <article className="fitbot-card">
       <div className="fitbot-card__media">
@@ -62,26 +75,30 @@ function ProductFitCard({
         <p className="fitbot-card__price">{formatPrice(product.price)}</p>
         <p className="fitbot-card__desc">{product.description}</p>
         <p className="fitbot-card__sizes">
-          Размеры: {product.sizes.map((s) => String(s).replace('.', ',')).join(', ')}
+          В наличии размеры:{' '}
+          {product.sizes.map((s) => String(s).replace('.', ',')).join(', ')}
         </p>
-        <p className="fitbot-card__rec">Вам подходит: {recommendedLabel}</p>
+        <p className="fitbot-card__rec">Вам подходит: {sizeLabel}</p>
         {product.width ? (
           <p className="fitbot-card__width">Полнота: {FOOT_WIDTH_LABELS[product.width]}</p>
         ) : (
           <p className="fitbot-card__width fitbot-card__width--muted">
-            Размер подходит по длине. По полноте рекомендуем проверить описание модели или
-            уточнить у консультанта.
+            Размер подходит по длине. По полноте рекомендуем проверить описание модели.
           </p>
         )}
         <div className="fitbot-card__actions">
           <Link
             className="btn btn--outline"
-            to={`/product/${product.id}?size=${recommendedSize}`}
+            to={`/product/${product.id}?size=${matchedSize}`}
             onClick={onDetails}
           >
             Подробнее
           </Link>
-          <button type="button" className="btn btn--primary" onClick={() => onBuy(product)}>
+          <button
+            type="button"
+            className="btn btn--primary"
+            onClick={() => onBuy(product, matchedSize)}
+          >
             Купить
           </button>
         </div>
@@ -113,7 +130,12 @@ export function FitBot() {
       setSession((s) => ({
         ...s,
         open: true,
-        step: s.welcomeSeen && s.footLength && s.footWidth && s.fitCategory ? 'results' : s.step === 'welcome' ? 'welcome' : s.step,
+        step:
+          s.welcomeSeen && s.footLength && s.footWidth && s.fitCategory
+            ? 'results'
+            : s.step === 'welcome'
+              ? 'welcome'
+              : s.step,
       }))
     window.addEventListener(FIT_BOT_OPEN_EVENT, open)
     return () => window.removeEventListener(FIT_BOT_OPEN_EVENT, open)
@@ -197,9 +219,8 @@ export function FitBot() {
     setAddedId(null)
   }
 
-  const handleBuy = (product: Product) => {
-    if (session.recommendedSize == null) return
-    addToCart(product.id, session.recommendedSize)
+  const handleBuy = (product: Product, size: number) => {
+    addToCart(product.id, size)
     setAddedId(product.id)
   }
 
@@ -214,10 +235,8 @@ export function FitBot() {
     <div className={`fitbot ${session.open ? 'is-open' : ''}`}>
       {!session.open && (
         <button type="button" className="fitbot__launcher" onClick={openBot}>
-          <span className="fitbot__launcher-icon" aria-hidden="true">
-            👟
-          </span>
-          <span className="fitbot__launcher-text">Подбор размера</span>
+          <img className="fitbot__launcher-avatar" src={BOT_AVATAR} alt="" width={28} height={28} />
+          <span className="fitbot__launcher-text">Мистер Ботиночкин</span>
         </button>
       )}
 
@@ -226,12 +245,15 @@ export function FitBot() {
           className="fitbot__panel"
           role="dialog"
           aria-modal="true"
-          aria-label="Подбор обуви по стопе"
+          aria-label={`${BOT_NAME}: подбор обуви`}
         >
           <header className="fitbot__head">
-            <div>
-              <p className="fitbot__brand">FORMA</p>
-              <p className="fitbot__subtitle">Помощник по размеру</p>
+            <div className="fitbot__head-person">
+              <img src={BOT_AVATAR} alt="" width={44} height={44} />
+              <div>
+                <p className="fitbot__brand">{BOT_NAME}</p>
+                <p className="fitbot__subtitle">Консультант FORMA · реальные модели в наличии</p>
+              </div>
             </div>
             <button
               type="button"
@@ -248,8 +270,13 @@ export function FitBot() {
           <div className="fitbot__body">
             {session.step === 'welcome' && (
               <div className="fitbot__step">
-                <h2>Привет! 👋</h2>
-                <p>Помогу подобрать обувь по вашей стопе. Это займет меньше минуты.</p>
+                <BotSpeech>
+                  <h2>Привет! Я {BOT_NAME} 👋</h2>
+                  <p>
+                    Помогу подобрать обувь по вашей стопе из моделей, которые сейчас есть в магазине.
+                    Это займёт меньше минуты.
+                  </p>
+                </BotSpeech>
                 <button type="button" className="btn btn--primary fitbot__primary" onClick={startFit}>
                   Подобрать обувь
                 </button>
@@ -258,11 +285,13 @@ export function FitBot() {
 
             {session.step === 'length' && (
               <form className="fitbot__step" onSubmit={submitLength}>
-                <h2>Сначала измерим длину стопы</h2>
-                <p>
-                  Поставьте стопу на лист бумаги, измерьте расстояние от пятки до самого длинного
-                  пальца и введите результат.
-                </p>
+                <BotSpeech>
+                  <h2>Сначала измерим длину стопы</h2>
+                  <p>
+                    Поставьте стопу на лист бумаги, измерьте расстояние от пятки до самого длинного
+                    пальца и введите результат.
+                  </p>
+                </BotSpeech>
                 <label className="fitbot__field">
                   Длина стопы, см
                   <input
@@ -292,11 +321,13 @@ export function FitBot() {
                 >
                   ← Назад
                 </button>
-                <h2>Теперь измерим ширину стопы</h2>
-                <p>
-                  Измерьте самую широкую часть стопы. Лучше измерять обе стопы и указать большее
-                  значение.
-                </p>
+                <BotSpeech>
+                  <h2>Теперь измерим ширину стопы</h2>
+                  <p>
+                    Измерьте самую широкую часть стопы. Лучше измерить обе стопы и указать большее
+                    значение.
+                  </p>
+                </BotSpeech>
                 <label className="fitbot__field">
                   Ширина стопы, см
                   <input
@@ -329,8 +360,10 @@ export function FitBot() {
                 >
                   ← Назад
                 </button>
-                <h2>Для кого выбираем обувь?</h2>
-                <p>Выберите категорию — сразу подберём размер и модели.</p>
+                <BotSpeech>
+                  <h2>Для кого выбираем обувь?</h2>
+                  <p>Выберите категорию — я сразу отберу модели из наличия магазина.</p>
+                </BotSpeech>
                 <div className="fitbot__cats">
                   <button type="button" onClick={() => chooseCategory('women')}>
                     👩 Женская обувь
@@ -358,19 +391,25 @@ export function FitBot() {
                   >
                     ← Сменить категорию
                   </button>
-                  <h2>Нашли подходящие варианты 👟</h2>
+                  <BotSpeech>
+                    <h2>
+                      {listed.length > 0
+                        ? 'Нашёл подходящие модели в наличии'
+                        : 'Пока не нашёл точное совпадение'}
+                    </h2>
+                    <p>
+                      По длине стопы ориентировочно подходит размер EU{' '}
+                      {session.recommendedLabel}. Ниже — товары из каталога магазина.
+                    </p>
+                  </BotSpeech>
+
                   <ul className="fitbot__summary">
-                    <li>Ваша длина стопы: {formatCm(session.footLength)} см</li>
+                    <li>Длина стопы: {formatCm(session.footLength)} см</li>
                     <li>Ширина стопы: {formatCm(session.footWidth)} см</li>
                     <li>Категория: {FIT_CATEGORY_LABELS[session.fitCategory]}</li>
-                    <li>
-                      Рекомендуемый размер: EU {session.recommendedLabel}
-                    </li>
+                    <li>Рекомендуемый размер: EU {session.recommendedLabel}</li>
+                    <li>Моделей в подборке: {listed.length}</li>
                   </ul>
-                  <p className="fitbot__explain">
-                    По длине стопы вам ориентировочно подходит размер EU{' '}
-                    {session.recommendedLabel}.
-                  </p>
 
                   {addedId && (
                     <div className="fitbot__toast" role="status">
@@ -399,14 +438,10 @@ export function FitBot() {
 
                   {listed.length > 0 ? (
                     <div className="fitbot__list">
-                      {listed.map((product) => (
+                      {listed.map((item) => (
                         <ProductFitCard
-                          key={product.id}
-                          product={product}
-                          recommendedSize={session.recommendedSize!}
-                          recommendedLabel={
-                            formatSizeLabel(session.recommendedSize!, session.fitCategory!)
-                          }
+                          key={item.product.id}
+                          item={item}
                           onBuy={handleBuy}
                           onDetails={() => patch({ open: false })}
                         />
@@ -414,7 +449,7 @@ export function FitBot() {
                     </div>
                   ) : (
                     <div className="fitbot__empty">
-                      <p>По вашим параметрам пока не нашли подходящих моделей.</p>
+                      <p>По вашим параметрам пока нет моделей в наличии.</p>
                       <div className="fitbot__empty-actions">
                         <button
                           type="button"
@@ -433,8 +468,8 @@ export function FitBot() {
                       </div>
                       {session.showNearby && (
                         <p className="fitbot__hint">
-                          Сейчас в этой категории нет подходящих моделей. Попробуйте ближайший
-                          размер или посмотрите весь каталог.
+                          В этой категории нет подходящих моделей даже рядом по размеру. Загляните в
+                          общий каталог.
                         </p>
                       )}
                     </div>
@@ -442,8 +477,8 @@ export function FitBot() {
 
                   {match && match.exact.length === 0 && listed.length > 0 && (
                     <p className="fitbot__hint">
-                      Показаны ближайшие размеры — точного совпадения по EU{' '}
-                      {session.recommendedLabel} пока нет.
+                      Показаны ближайшие размеры — точного EU {session.recommendedLabel} в наличии
+                      пока нет.
                     </p>
                   )}
                 </div>

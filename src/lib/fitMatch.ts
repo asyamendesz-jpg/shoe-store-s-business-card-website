@@ -1,9 +1,5 @@
 import type { FitCategory, FootWidth, Product } from '../types'
-import {
-  classifyFootWidth,
-  nearbySizes,
-  sizesMatch,
-} from './sizeCharts'
+import { classifyFootWidth, nearbySizes, sizesMatch } from './sizeCharts'
 
 export interface FitMatchOptions {
   products: Product[]
@@ -14,13 +10,47 @@ export interface FitMatchOptions {
   showNearby?: boolean
 }
 
-export interface FitMatchResult {
-  exact: Product[]
-  nearby: Product[]
-  userWidth: FootWidth
-  widthKnownCount: number
+export interface MatchedProduct {
+  product: Product
+  /** Размер из наличия товара, который реально подойдёт к покупке */
+  matchedSize: number
 }
 
+export interface FitMatchResult {
+  exact: MatchedProduct[]
+  nearby: MatchedProduct[]
+  userWidth: FootWidth
+}
+
+function isAvailable(product: Product): boolean {
+  if (!product.inStock) return false
+  if (typeof product.stock === 'number' && product.stock <= 0) return false
+  return true
+}
+
+function matchesCategory(product: Product, fitCategory: FitCategory): boolean {
+  if (product.fitCategory === fitCategory) return true
+  // Запасной путь для товаров из админки без явного fitCategory / со старой категорией
+  if (fitCategory === 'women' && product.category === 'Женская') return true
+  if (fitCategory === 'men' && product.category === 'Мужская') return true
+  if (fitCategory === 'kids' && product.category === 'Детская') return true
+  return false
+}
+
+function bySize(products: Product[], size: number): MatchedProduct[] {
+  return products
+    .filter((p) => sizesMatch(p.sizes, size))
+    .map((product) => ({
+      product,
+      matchedSize: product.sizes.find((s) => Math.abs(s - size) < 0.01) ?? size,
+    }))
+}
+
+/**
+ * Подбор из реальных товаров магазина (админка / localStorage):
+ * категория + наличие + подходящий размер.
+ * Полнота влияет только на сортировку, не на жёсткий отсев.
+ */
 export function matchProductsForFit({
   products,
   fitCategory,
@@ -30,35 +60,36 @@ export function matchProductsForFit({
   showNearby = false,
 }: FitMatchOptions): FitMatchResult {
   const userWidth = classifyFootWidth(footLength, footWidth)
-  const inCategory = products.filter((p) => p.fitCategory === fitCategory && p.inStock)
+  const pool = products.filter((p) => matchesCategory(p, fitCategory) && isAvailable(p))
 
-  const bySize = (size: number) =>
-    inCategory.filter((p) => {
-      if (!sizesMatch(p.sizes, size)) return false
-      if (p.width && p.width !== userWidth) return false
-      return true
+  const sortByWidth = (items: MatchedProduct[]) =>
+    [...items].sort((a, b) => {
+      const aScore = a.product.width === userWidth ? 0 : a.product.width ? 1 : 2
+      const bScore = b.product.width === userWidth ? 0 : b.product.width ? 1 : 2
+      return aScore - bScore
     })
 
-  const exact = bySize(recommendedSize)
+  const exact = sortByWidth(bySize(pool, recommendedSize))
   if (exact.length > 0 && !showNearby) {
-    return {
-      exact,
-      nearby: [],
-      userWidth,
-      widthKnownCount: exact.filter((p) => p.width).length,
+    return { exact, nearby: [], userWidth }
+  }
+
+  const nearSizeList = nearbySizes(recommendedSize, fitCategory, 2)
+  const exactIds = new Set(exact.map((item) => item.product.id))
+  const nearbyMap = new Map<string, MatchedProduct>()
+
+  for (const size of nearSizeList) {
+    for (const item of bySize(pool, size)) {
+      if (exactIds.has(item.product.id) || nearbyMap.has(item.product.id)) continue
+      nearbyMap.set(item.product.id, item)
     }
   }
 
-  const nearSizes = nearbySizes(recommendedSize, fitCategory, 2)
-  const exactIds = new Set(exact.map((p) => p.id))
-  const nearby = nearSizes
-    .flatMap((size) => bySize(size))
-    .filter((p, i, arr) => !exactIds.has(p.id) && arr.findIndex((x) => x.id === p.id) === i)
+  const nearby = sortByWidth([...nearbyMap.values()])
 
   return {
     exact,
     nearby: showNearby || exact.length === 0 ? nearby : [],
     userWidth,
-    widthKnownCount: [...exact, ...nearby].filter((p) => p.width).length,
   }
 }
