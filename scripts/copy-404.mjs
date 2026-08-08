@@ -14,7 +14,7 @@ copyFileSync(indexHtml, notFoundHtml)
 console.log(`Created ${outDir}/404.html for GitHub Pages SPA routing`)
 
 /** Физические index.html для клиентских маршрутов — без этого /admin и /cart дают пустой 404 на Pages. */
-const spaRoutes = ['admin', 'cart', 'privacy', 'offer']
+const spaRoutes = ['admin', 'cart', 'privacy', 'offer', 'product']
 for (const route of spaRoutes) {
   const dir = resolve(outDir, route)
   mkdirSync(dir, { recursive: true })

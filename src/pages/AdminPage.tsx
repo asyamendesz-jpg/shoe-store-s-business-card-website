@@ -2,12 +2,23 @@ import { type FormEvent, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import { useLanguage } from '../context/LanguageContext'
-import { createId, formatPrice, isAdminAuthenticated, setAdminAuthenticated } from '../lib/storage'
+import { createId, formatPrice, isAdminAuthenticated, setAdminAuthenticated, normalizeProduct } from '../lib/storage'
 import { interpolate } from '../i18n/translations'
 import { PRODUCT_CATEGORIES, STORE, type OrderStatus, type Product, type ProductCategory } from '../types'
 import './AdminPage.css'
 
-const emptyForm = (): Omit<Product, 'id'> & { id?: string; sizesText: string } => ({
+type AdminForm = {
+  name: string
+  price: number
+  category: ProductCategory
+  image: string
+  description: string
+  sizes: number[]
+  sizesText: string
+  inStock: boolean
+}
+
+const emptyForm = (): AdminForm => ({
   name: '',
   price: 0,
   category: 'Повседневная',
@@ -90,7 +101,7 @@ export function AdminPage() {
       return
     }
 
-    const product: Product = {
+    const product = normalizeProduct({
       id: editingId ?? createId('product'),
       name: form.name.trim(),
       price: Number(form.price),
@@ -99,7 +110,7 @@ export function AdminPage() {
       description: form.description.trim(),
       sizes,
       inStock: form.inStock,
-    }
+    })
 
     upsertProduct(product)
     resetForm()

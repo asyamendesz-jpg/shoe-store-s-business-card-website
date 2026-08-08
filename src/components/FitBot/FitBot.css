@@ -1,0 +1,365 @@
+.fitbot {
+  position: relative;
+  z-index: 80;
+}
+
+.fitbot__launcher {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 52px;
+  padding: 0.7rem 1.05rem 0.7rem 0.85rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #f7f3ee;
+  box-shadow: 0 14px 36px rgba(47, 46, 44, 0.28);
+  cursor: pointer;
+  font-weight: 600;
+  animation: fitbotPop 0.55s var(--ease) both;
+}
+
+.fitbot__launcher:hover {
+  transform: translateY(-2px);
+}
+
+.fitbot__launcher-icon {
+  font-size: 1.15rem;
+}
+
+.fitbot__launcher-text {
+  font-size: 0.92rem;
+}
+
+.fitbot__panel {
+  position: fixed;
+  right: max(0.75rem, env(safe-area-inset-right));
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  width: min(420px, calc(100vw - 1.5rem));
+  max-height: min(88dvh, 720px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background:
+    linear-gradient(165deg, rgba(92, 107, 82, 0.08), transparent 42%),
+    var(--bg-elevated);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  animation: fitbotRise 0.35s var(--ease) both;
+}
+
+.fitbot__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.fitbot__brand {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  font-size: 0.95rem;
+}
+
+.fitbot__subtitle {
+  margin: 0.2rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.86rem;
+}
+
+.fitbot__close {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: var(--bg-soft);
+  color: var(--ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fitbot__dots {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.75rem 1.1rem 0;
+}
+
+.fitbot__dots span {
+  flex: 1;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--line);
+}
+
+.fitbot__dots span.is-active {
+  background: var(--accent);
+}
+
+.fitbot__body {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem 1.1rem 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fitbot__step h2 {
+  font-size: 1.35rem;
+  margin-bottom: 0.55rem;
+}
+
+.fitbot__step > p {
+  color: var(--ink-muted);
+  margin-bottom: 1.1rem;
+  font-size: 0.95rem;
+}
+
+.fitbot__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 0.75rem;
+}
+
+.fitbot__field input {
+  min-height: 52px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 400;
+  background: #fff;
+  font-size: 1.05rem;
+}
+
+.fitbot__field input:focus {
+  outline: 2px solid rgba(92, 107, 82, 0.35);
+  outline-offset: 1px;
+}
+
+.fitbot__error {
+  color: #9b3b2e;
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+.fitbot__hint {
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  margin: 0 0 1rem;
+}
+
+.fitbot__primary {
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.fitbot__back {
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 0.85rem;
+  cursor: pointer;
+}
+
+.fitbot__cats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.fitbot__cats button {
+  min-height: 56px;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.fitbot__cats button:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+}
+
+.fitbot__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0 0 0.85rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  background: var(--bg-soft);
+  font-size: 0.92rem;
+}
+
+.fitbot__explain {
+  margin: 0 0 1rem !important;
+  color: var(--ink) !important;
+  font-weight: 500;
+}
+
+.fitbot__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fitbot-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.fitbot-card__media img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.fitbot-card__body {
+  padding: 0.95rem 1rem 1.05rem;
+}
+
+.fitbot-card__body h3 {
+  font-size: 1.05rem;
+}
+
+.fitbot-card__price {
+  margin-top: 0.25rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.fitbot-card__desc,
+.fitbot-card__sizes,
+.fitbot-card__width {
+  margin-top: 0.45rem;
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+}
+
+.fitbot-card__rec {
+  display: inline-block;
+  margin-top: 0.65rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.fitbot-card__width--muted {
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.fitbot-card__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.fitbot-card__actions .btn {
+  min-height: 46px;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.9rem;
+}
+
+.fitbot__toast {
+  margin-bottom: 1rem;
+  padding: 0.95rem 1rem;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(92, 107, 82, 0.2);
+}
+
+.fitbot__toast p {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+.fitbot__toast-actions {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.fitbot__empty {
+  padding: 0.5rem 0 0.25rem;
+}
+
+.fitbot__empty-actions {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+
+@keyframes fitbotPop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fitbotRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .fitbot__panel {
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: min(92dvh, 100%);
+    border-radius: 20px 20px 0 0;
+  }
+
+  .fitbot__launcher-text {
+    display: none;
+  }
+
+  .fitbot__launcher {
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+}
+
+@media (max-height: 640px) {
+  .fitbot__panel {
+    max-height: 94dvh;
+  }
+}

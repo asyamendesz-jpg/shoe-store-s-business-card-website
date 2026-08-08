@@ -22,13 +22,25 @@
   flex-shrink: 0;
 }
 
+.size-help__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
 @media (max-width: 760px) {
   .size-help__panel {
     flex-direction: column;
     align-items: stretch;
   }
 
+  .size-help__actions,
   .size-help__panel .btn {
+    width: 100%;
+  }
+
+  .size-help__actions .btn {
     width: 100%;
   }
 }

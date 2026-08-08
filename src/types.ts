@@ -1,3 +1,7 @@
+export type FitCategory = 'women' | 'men' | 'kids'
+
+export type FootWidth = 'narrow' | 'medium' | 'wide' | 'extra-wide'
+
 export type ProductCategory =
   | 'Женская'
   | 'Мужская'
@@ -10,11 +14,21 @@ export interface Product {
   id: string
   name: string
   price: number
+  /** Категория для общего каталога на сайте */
   category: ProductCategory
+  /** Категория для бота подбора (женщины / мужчины / дети) */
+  fitCategory: FitCategory
   image: string
+  images: string[]
   description: string
+  /** Доступные EU-размеры (availableSizes) */
   sizes: number[]
+  /** Полнота колодки; null/undefined — неизвестна */
+  width?: FootWidth | null
+  material: string
+  season: string
   inStock: boolean
+  stock: number
 }
 
 export interface CartItem {
@@ -52,6 +66,19 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
   'Ботинки',
   'Повседневная',
 ]
+
+export const FOOT_WIDTH_LABELS: Record<FootWidth, string> = {
+  narrow: 'Узкая',
+  medium: 'Средняя',
+  wide: 'Широкая',
+  'extra-wide': 'Очень широкая',
+}
+
+export const FIT_CATEGORY_LABELS: Record<FitCategory, string> = {
+  women: 'Женская обувь',
+  men: 'Мужская обувь',
+  kids: 'Детская обувь',
+}
 
 export const STORE = {
   name: 'FORMA',

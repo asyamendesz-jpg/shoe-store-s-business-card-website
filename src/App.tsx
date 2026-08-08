@@ -5,11 +5,13 @@ import { LanguageProvider } from './context/LanguageContext'
 import { ScrollManager } from './components/ScrollManager'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
+import { FitBot } from './components/FitBot/FitBot'
 import { HomePage } from './pages/HomePage'
 import { CartPage } from './pages/CartPage'
 import { PrivacyPage } from './pages/PrivacyPage'
 import { OfferPage } from './pages/OfferPage'
 import { AdminPage } from './pages/AdminPage'
+import { ProductPage } from './pages/ProductPage'
 
 /** Basename из vite.config.ts → base (без завершающего слэша) */
 const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '') || undefined
@@ -20,6 +22,7 @@ function PageShell({ children }: { children: ReactNode }) {
       <Header />
       <main>{children}</main>
       <Footer />
+      <FitBot />
     </>
   )
 }
@@ -31,7 +34,23 @@ function App() {
         <BrowserRouter basename={routerBasename}>
           <ScrollManager />
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/"
+              element={
+                <>
+                  <HomePage />
+                  <FitBot />
+                </>
+              }
+            />
+            <Route
+              path="/product/:id"
+              element={
+                <PageShell>
+                  <ProductPage />
+                </PageShell>
+              }
+            />
             <Route
               path="/cart"
               element={

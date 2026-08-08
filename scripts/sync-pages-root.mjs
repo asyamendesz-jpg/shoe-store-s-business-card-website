@@ -28,7 +28,7 @@ if (existsSync(imagesSrc)) {
 copyFileSync(resolve(dist, 'index.html'), resolve(root, 'index.html'))
 copyFileSync(resolve(dist, '404.html'), resolve(root, '404.html'))
 
-const spaRoutes = ['admin', 'cart', 'privacy', 'offer']
+const spaRoutes = ['admin', 'cart', 'privacy', 'offer', 'product']
 for (const route of spaRoutes) {
   const src = resolve(dist, route, 'index.html')
   if (!existsSync(src)) continue
