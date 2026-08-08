@@ -9,9 +9,9 @@ export const images = {
   boots: asset('boots.png'),
   casual: asset('casual.png'),
   menSneakers: asset('men-sneakers.jpg'),
-  trend1: asset('trend1.jpg'),
-  trend2: asset('trend2.jpg'),
-  trend3: asset('trend3.jpg'),
+  trend1: asset('sneakers.png'),
+  trend2: asset('boots.png'),
+  trend3: asset('casual.png'),
   sustainable: asset('sustainable.jpg'),
   cta: asset('cta.jpg'),
 } as const
