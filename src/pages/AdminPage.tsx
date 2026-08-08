@@ -38,7 +38,7 @@ export function AdminPage() {
   const { t } = useLanguage()
   const { products, orders, upsertProduct, deleteProduct, updateOrderStatus } = useStore()
   const [authed, setAuthed] = useState(() => isAdminAuthenticated())
-  const [username, setUsername] = useState(ADMIN_CREDENTIALS.login)
+  const [username, setUsername] = useState<string>(ADMIN_CREDENTIALS.login)
   const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
   const [tab, setTab] = useState<'orders' | 'products'>('products')
