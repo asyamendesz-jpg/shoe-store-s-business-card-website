@@ -14,7 +14,7 @@ export function PrivacyPage() {
         </Link>
         <h1>{t('privacyTitle')}</h1>
         <p className="legal-page__meta">
-          {t('legalMeta', { name: STORE.name, address: t('address'), phone: STORE.phoneDisplay })}
+          {t('legalMeta', { name: STORE.name, address: t('address') })}
         </p>
 
         {lang === 'ru' ? (
@@ -56,16 +56,14 @@ export function PrivacyPage() {
             <section>
               <h2>5. Права пользователя</h2>
               <p>
-                Вы можете запросить уточнение, исправление или удаление своих данных, связавшись с нами
-                по телефону <a href={STORE.phoneHref}>{STORE.phoneDisplay}</a> или лично по адресу{' '}
-                {t('address')}.
+                Вы можете запросить уточнение, исправление или удаление своих данных, обратившись
+                лично по адресу {t('address')} или через заявку на сайте.
               </p>
             </section>
             <section>
               <h2>6. Контакты</h2>
               <p>
-                По вопросам обработки персональных данных обращайтесь: {STORE.name}, {t('address')},{' '}
-                <a href={STORE.phoneHref}>{STORE.phoneDisplay}</a>.
+                По вопросам обработки персональных данных обращайтесь: {STORE.name}, {t('address')}.
               </p>
             </section>
           </>
@@ -108,15 +106,14 @@ export function PrivacyPage() {
             <section>
               <h2>5. Your rights</h2>
               <p>
-                You may request clarification, correction, or deletion of your data by contacting us at{' '}
-                <a href={STORE.phoneHref}>{STORE.phoneDisplay}</a> or in person at {t('address')}.
+                You may request clarification, correction, or deletion of your data by visiting us in
+                person at {t('address')} or by submitting a request on the website.
               </p>
             </section>
             <section>
               <h2>6. Contacts</h2>
               <p>
-                For privacy questions, contact: {STORE.name}, {t('address')},{' '}
-                <a href={STORE.phoneHref}>{STORE.phoneDisplay}</a>.
+                For privacy questions, contact: {STORE.name}, {t('address')}.
               </p>
             </section>
           </>

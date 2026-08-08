@@ -165,7 +165,7 @@ export function AdminPage() {
           <div>
             <h1>{t('adminTitle')}</h1>
             <p>
-              {STORE.address} · {STORE.phoneDisplay}
+              {STORE.address}
             </p>
           </div>
           <div className="admin-page__actions">

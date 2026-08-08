@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { STORE } from '../types'
 import { useLanguage } from '../context/LanguageContext'
 import './Footer.css'
 
@@ -50,9 +49,6 @@ export function Footer() {
           <h3>{t('footerContacts')}</h3>
           <ul>
             <li>{t('address')}</li>
-            <li>
-              <a href={STORE.phoneHref}>{STORE.phoneDisplay}</a>
-            </li>
             <li>{t('hours')}</li>
           </ul>
         </div>

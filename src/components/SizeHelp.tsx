@@ -1,4 +1,3 @@
-import { STORE } from '../types'
 import { useInView } from '../hooks/useInView'
 import { useLanguage } from '../context/LanguageContext'
 import { FIT_BOT_OPEN_EVENT } from '../lib/fitSession'
@@ -24,9 +23,6 @@ export function SizeHelp() {
           <button type="button" className="btn btn--primary" onClick={openBot}>
             Подобрать обувь
           </button>
-          <a className="btn btn--outline" href={STORE.phoneHref}>
-            {t('callUs', { phone: STORE.phoneDisplay })}
-          </a>
         </div>
       </div>
     </section>

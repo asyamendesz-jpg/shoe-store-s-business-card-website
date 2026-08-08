@@ -14,7 +14,7 @@ export function OfferPage() {
         </Link>
         <h1>{t('offerTitle')}</h1>
         <p className="legal-page__meta">
-          {t('legalMeta', { name: STORE.name, address: t('address'), phone: STORE.phoneDisplay })}
+          {t('legalMeta', { name: STORE.name, address: t('address') })}
         </p>
 
         {lang === 'ru' ? (
@@ -67,8 +67,7 @@ export function OfferPage() {
             <section>
               <h2>7. Контакты продавца</h2>
               <p>
-                {STORE.name}, {t('address')}, тел.{' '}
-                <a href={STORE.phoneHref}>{STORE.phoneDisplay}</a>, режим работы: {t('hours')}.
+                {STORE.name}, {t('address')}, режим работы: {t('hours')}.
               </p>
             </section>
           </>
@@ -122,8 +121,7 @@ export function OfferPage() {
             <section>
               <h2>7. Seller contacts</h2>
               <p>
-                {STORE.name}, {t('address')}, tel.{' '}
-                <a href={STORE.phoneHref}>{STORE.phoneDisplay}</a>, hours: {t('hours')}.
+                {STORE.name}, {t('address')}, hours: {t('hours')}.
               </p>
             </section>
           </>

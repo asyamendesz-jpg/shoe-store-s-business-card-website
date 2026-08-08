@@ -113,15 +113,15 @@ export const translations = {
     sizeHelpEyebrow: 'Помощь с размером',
     sizeHelpTitle: 'Подберём пару без угадываний',
     sizeHelpText:
-      'Позвоните или напишите длину стопы, предпочтения по полноте и для кого нужна обувь — подскажем модель и размер. Магазин: {address}.',
-    callUs: 'Позвонить {phone}',
+      'Укажите длину и ширину стопы в помощнике подбора — подскажем модель и размер. Магазин: {address}.',
+    callUs: 'Подобрать обувь',
 
     faqEyebrow: 'FAQ',
     faqTitle: 'Ответы до покупки',
     faqLead: 'Коротко о размере, обмене, доставке и гарантии — без мелкого шрифта.',
     faq1q: 'Как подобрать размер?',
     faq1a:
-      'Измерьте длину стопы в сантиметрах вечером и сверьтесь с нашей таблицей размеров. Если сомневаетесь — позвоните 8-928-775-36-93: подскажем размер по модели и полноте стопы.',
+      'Измерьте длину стопы в сантиметрах вечером и сверьтесь с нашей таблицей размеров. Если сомневаетесь — откройте помощник подбора на сайте: подскажем размер по модели и полноте стопы.',
     faq2q: 'Есть ли обмен?',
     faq2a:
       'Да. Если пара не подошла по размеру или посадке, вы можете обменять её в течение 14 дней при сохранении товарного вида и полной комплектации.',
@@ -166,11 +166,11 @@ export const translations = {
     cartIncrease: 'Увеличить',
     cartCheckout: 'Оформление заявки',
     cartTotal: 'Итого:',
-    cartHint: 'Самовывоз: {address}. Тел. {phone}',
+    cartHint: 'Самовывоз: {address}.',
     cartName: 'Имя',
     cartNamePlaceholder: 'Как к вам обращаться',
     cartPhone: 'Телефон',
-    cartPhonePlaceholder: '8-928-...',
+    cartPhonePlaceholder: 'Ваш номер телефона',
     cartComment: 'Комментарий',
     cartCommentPlaceholder: 'Удобное время, вопросы по размеру',
     cartSubmit: 'Отправить заявку',
@@ -188,7 +188,7 @@ export const translations = {
     privacyBack: '← На главную',
     offerTitle: 'Публичная оферта',
     offerBack: '← На главную',
-    legalMeta: 'Магазин {name}, {address}. Тел. {phone}',
+    legalMeta: 'Магазин {name}, {address}.',
 
     adminTitle: 'Админка',
     adminLoginTitle: 'Админка FORMA',
@@ -338,15 +338,15 @@ export const translations = {
     sizeHelpEyebrow: 'Size help',
     sizeHelpTitle: 'We’ll match a pair without guesswork',
     sizeHelpText:
-      'Call us or share foot length, width preference, and who the shoes are for — we’ll suggest a model and size. Store: {address}.',
-    callUs: 'Call {phone}',
+      'Enter foot length and width in the size helper — we’ll suggest a model and size. Store: {address}.',
+    callUs: 'Find shoes',
 
     faqEyebrow: 'FAQ',
     faqTitle: 'Answers before you buy',
     faqLead: 'Short answers about size, exchange, pickup, and warranty — no fine print.',
     faq1q: 'How do I choose a size?',
     faq1a:
-      'Measure your foot length in centimeters in the evening and check our size chart. If you’re unsure, call 8-928-775-36-93 — we’ll suggest a size by model and foot width.',
+      'Measure your foot length in centimeters in the evening and check our size chart. If you’re unsure, open the size helper on the site — we’ll suggest a size by model and foot width.',
     faq2q: 'Do you offer exchanges?',
     faq2a:
       'Yes. If the pair doesn’t fit by size or feel, you can exchange it within 14 days if it keeps its original condition and full packaging.',
@@ -391,11 +391,11 @@ export const translations = {
     cartIncrease: 'Increase',
     cartCheckout: 'Submit a request',
     cartTotal: 'Total:',
-    cartHint: 'Pickup: {address}. Tel. {phone}',
+    cartHint: 'Pickup: {address}.',
     cartName: 'Name',
     cartNamePlaceholder: 'How should we address you',
     cartPhone: 'Phone',
-    cartPhonePlaceholder: '8-928-...',
+    cartPhonePlaceholder: 'Your phone number',
     cartComment: 'Comment',
     cartCommentPlaceholder: 'Preferred time, size questions',
     cartSubmit: 'Send request',
@@ -413,7 +413,7 @@ export const translations = {
     privacyBack: '← Back to home',
     offerTitle: 'Public offer',
     offerBack: '← Back to home',
-    legalMeta: 'Store {name}, {address}. Tel. {phone}',
+    legalMeta: 'Store {name}, {address}.',
 
     adminTitle: 'Admin',
     adminLoginTitle: 'FORMA Admin',

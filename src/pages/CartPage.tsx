@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import { useLanguage } from '../context/LanguageContext'
 import { formatPrice } from '../lib/storage'
-import { STORE } from '../types'
 import './CartPage.css'
 
 export function CartPage() {
@@ -121,7 +120,7 @@ export function CartPage() {
                   {t('cartTotal')} <strong>{formatPrice(cartTotal)}</strong>
                 </p>
                 <p className="cart-page__hint">
-                  {t('cartHint', { address: t('address'), phone: STORE.phoneDisplay })}
+                  {t('cartHint', { address: t('address') })}
                 </p>
 
                 <form onSubmit={handleSubmit} className="cart-form">
