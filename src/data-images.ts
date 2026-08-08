@@ -1,13 +1,13 @@
 const asset = (file: string) => `${import.meta.env.BASE_URL}images/${file}`
 
 export const images = {
-  hero: asset('hero.jpg'),
-  women: asset('women.jpg'),
+  hero: asset('hero.png'),
+  women: asset('women.png'),
   men: asset('men.jpg'),
-  kids: asset('kids.jpg'),
-  sneakers: asset('sneakers.jpg'),
-  boots: asset('boots.jpg'),
-  casual: asset('casual.jpg'),
+  kids: asset('kids.png'),
+  sneakers: asset('sneakers.png'),
+  boots: asset('boots.png'),
+  casual: asset('casual.png'),
   menSneakers: asset('men-sneakers.jpg'),
   trend1: asset('trend1.jpg'),
   trend2: asset('trend2.jpg'),
