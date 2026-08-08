@@ -3,7 +3,7 @@ import { images } from '../data'
 
 const PRODUCTS_KEY = 'forma_products'
 const PRODUCTS_VERSION_KEY = 'forma_products_version'
-const PRODUCTS_VERSION = 4
+const PRODUCTS_VERSION = 5
 const ORDERS_KEY = 'forma_orders'
 const CART_KEY = 'forma_cart'
 const ADMIN_KEY = 'forma_admin'

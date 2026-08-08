@@ -38,11 +38,18 @@
   margin-top: 1.4rem;
 }
 
-.reviews__item img {
+.reviews__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  object-fit: cover;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .reviews__item cite {

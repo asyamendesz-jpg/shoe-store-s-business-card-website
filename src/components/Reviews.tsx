@@ -1,14 +1,13 @@
-import { images } from '../data'
 import { useInView } from '../hooks/useInView'
 import { useLanguage } from '../context/LanguageContext'
 import type { TranslationKey } from '../i18n/translations'
 import './Reviews.css'
 
-const reviewItems: { name: string; photo: string; text: TranslationKey }[] = [
-  { name: 'Анна К.', photo: images.review1, text: 'review1' },
-  { name: 'Дмитрий С.', photo: images.review2, text: 'review2' },
-  { name: 'Елена М.', photo: images.review3, text: 'review3' },
-  { name: 'Игорь В.', photo: images.review4, text: 'review4' },
+const reviewItems: { name: string; initials: string; text: TranslationKey }[] = [
+  { name: 'Анна К.', initials: 'АК', text: 'review1' },
+  { name: 'Дмитрий С.', initials: 'ДС', text: 'review2' },
+  { name: 'Елена М.', initials: 'ЕМ', text: 'review3' },
+  { name: 'Игорь В.', initials: 'ИВ', text: 'review4' },
 ]
 
 function Stars({ label }: { label: string }) {
@@ -45,7 +44,9 @@ export function Reviews() {
               <Stars label={t('rating')} />
               <p>«{t(item.text)}»</p>
               <footer>
-                <img src={item.photo} alt="" width={48} height={48} loading="lazy" />
+                <span className="reviews__avatar" aria-hidden="true">
+                  {item.initials}
+                </span>
                 <cite>{item.name}</cite>
               </footer>
             </blockquote>

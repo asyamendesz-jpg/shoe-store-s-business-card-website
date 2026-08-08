@@ -16,6 +16,15 @@ if (existsSync(assetsOut)) {
 mkdirSync(assetsOut, { recursive: true })
 cpSync(resolve(dist, 'assets'), assetsOut, { recursive: true })
 
+const imagesSrc = resolve(dist, 'images')
+const imagesOut = resolve(root, 'images')
+if (existsSync(imagesSrc)) {
+  if (existsSync(imagesOut)) {
+    rmSync(imagesOut, { recursive: true, force: true })
+  }
+  cpSync(imagesSrc, imagesOut, { recursive: true })
+}
+
 copyFileSync(resolve(dist, 'index.html'), resolve(root, 'index.html'))
 copyFileSync(resolve(dist, '404.html'), resolve(root, '404.html'))
 
